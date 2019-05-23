@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import {BrowserRouter as Router, Route,Switch} from 'react-router-dom';
+import {IndexPage,FormPage} from './Component/page';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor (props){
+    super(props);
+    this.state = {
+      data:[
+        {id:'1',path:'/' ,component:IndexPage, exact:true},
+        {id:'2',path:'/form' ,component:FormPage, exact:false}
+      ]
+    }
+  }
+  render() {
+    return (
+      <Router>
+        <Switch>
+          {this.state.data.map(data => (
+            <Route key={data.id} path={data.path} exact={data.exact} component={data.component}></Route>
+          ))}
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 export default App;
